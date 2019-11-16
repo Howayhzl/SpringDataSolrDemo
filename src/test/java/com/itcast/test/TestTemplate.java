@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext-tx.xml")
@@ -43,6 +45,24 @@ public class TestTemplate {
     public void deleteById(){
          solrTemplate.deleteById("11");
          solrTemplate.commit();
+    }
+
+    @Test
+    public void testAddList(){
+        List list = new ArrayList();
+        for (int i = 0; i < 100; i++) {
+            TbItem item = new TbItem();
+            item.setId(i+1L);
+            item.setTitle("华为METE10");
+            item.setCategory("手机");
+            item.setBrand("华为");
+            item.setSeller("华为旗舰店");
+            item.setGoodsId(i+10L);
+            item.setPrice(new BigDecimal(3000.01));
+            list.add(item);
+        }
+        solrTemplate.saveBeans(list);
+        solrTemplate.commit();
     }
 
 }
