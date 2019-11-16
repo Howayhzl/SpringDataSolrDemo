@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.SolrTemplate;
+import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.result.ScoredPage;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -65,6 +68,19 @@ public class TestTemplate {
         solrTemplate.commit();
     }
 
+
+    @Test
+    public void testPageQuery(){
+        Query query = new SimpleQuery("*:*");
+        query.setOffset(20);
+        query.setRows(10);
+        ScoredPage<TbItem> page = solrTemplate.queryForPage(query, TbItem.class);
+        for (TbItem item : page.getContent()) {
+            System.out.println(item.getTitle()+" "+item.getPrice()+" "+item.getBrand());
+        }
+        System.out.println("总记录数："+page.getTotalElements());
+        System.out.println("总页数："+page.getTotalPages());
+    }
 }
 
 
