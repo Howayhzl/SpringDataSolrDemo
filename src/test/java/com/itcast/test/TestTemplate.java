@@ -2,6 +2,7 @@ package com.itcast.test;
 
 
 import com.item.pojo.TbItem;
+import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,19 @@ public class TestTemplate {
         solrTemplate.saveBean(item);
         solrTemplate.commit();
     }
+
+    @Test
+    public void findById(){
+        TbItem byId = solrTemplate.getById(10L, TbItem.class);
+        System.out.println(byId.getTitle());
+    }
+
+    @Test
+    public void deleteById(){
+         solrTemplate.deleteById("11");
+         solrTemplate.commit();
+    }
+
 }
 
 
