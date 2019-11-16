@@ -10,6 +10,7 @@ import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
 import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.SolrDataQuery;
 import org.springframework.data.solr.core.query.result.ScoredPage;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -98,6 +99,13 @@ public class TestTemplate {
         }
         System.out.println("总记录数："+page.getTotalElements());
         System.out.println("总页数："+page.getTotalPages());
+    }
+
+    @Test
+    public void deleteAll(){
+        Query query = new SimpleQuery("*:*");
+        solrTemplate.delete(query);
+        solrTemplate.commit();
     }
 }
 
